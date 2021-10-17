@@ -12,7 +12,7 @@
   "prettier.bracketSpacing": true,
   "prettier.jsxSingleQuote": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "window.zoomLevel": 2,
+  "window.zoomLevel": 3,
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "eslint.alwaysShowStatus": true,
   "editor.linkedEditing": true,
