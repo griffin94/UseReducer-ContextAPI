@@ -88,7 +88,7 @@ function Todo() {
           >
             {task.edit ? (
               <Form onSubmit={(e) => editTask(e, task.id)}>
-                <input type='text' name='task-name'></input>
+                <input type='text' name='task-name' autoComplete='off'></input>
                 <Button>Save</Button>
               </Form>
             ) : (
