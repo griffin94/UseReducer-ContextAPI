@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/UseReducer-ContextAPI/static/js/main.779fca63.chunk.js",
-    "main.js.map": "/UseReducer-ContextAPI/static/js/main.779fca63.chunk.js.map",
+    "main.js": "/UseReducer-ContextAPI/static/js/main.f6a94570.chunk.js",
+    "main.js.map": "/UseReducer-ContextAPI/static/js/main.f6a94570.chunk.js.map",
     "runtime-main.js": "/UseReducer-ContextAPI/static/js/runtime-main.e47fb026.js",
     "runtime-main.js.map": "/UseReducer-ContextAPI/static/js/runtime-main.e47fb026.js.map",
     "static/js/2.36ff73fd.chunk.js": "/UseReducer-ContextAPI/static/js/2.36ff73fd.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.e47fb026.js",
     "static/js/2.36ff73fd.chunk.js",
-    "static/js/main.779fca63.chunk.js"
+    "static/js/main.f6a94570.chunk.js"
   ]
 }
