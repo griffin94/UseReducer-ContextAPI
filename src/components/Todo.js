@@ -22,26 +22,23 @@ function Todo() {
     input.focus();
   };
 
-  const removeTask = (e, id) => {
-    e.stopPropagation();
-    setTasks(tasks.filter((task) => task.id !== id));
+  const removeTask = (id) => setTasks(tasks.filter((task) => task.id !== id));
+
+  const toggleCompleted = (e, id) => {
+    e.target === e.currentTarget &&
+      setTasks(
+        tasks.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                completed: !task.completed,
+              }
+            : task,
+        ),
+      );
   };
 
-  const toggleCompleted = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              completed: !task.completed,
-            }
-          : task,
-      ),
-    );
-  };
-
-  const setToEditTask = (e, id) => {
-    e.stopPropagation();
+  const setTaskToEdit = (id) =>
     setTasks(
       tasks.map((task) =>
         task.id === id
@@ -52,7 +49,6 @@ function Todo() {
           : task,
       ),
     );
-  };
 
   const editTask = (e, id) => {
     e.preventDefault();
@@ -84,7 +80,7 @@ function Todo() {
           <Task
             key={task.id}
             completed={task.completed}
-            onClick={() => toggleCompleted(task.id)}
+            onClick={(e) => toggleCompleted(e, task.id)}
           >
             {task.edit ? (
               <Form onSubmit={(e) => editTask(e, task.id)}>
@@ -95,8 +91,8 @@ function Todo() {
               task.value
             )}
             <div>
-              <Button onClick={(e) => removeTask(e, task.id)}>Remove</Button>
-              <Button onClick={(e) => setToEditTask(e, task.id)}>
+              <Button onClick={() => removeTask(task.id)}>Remove</Button>
+              <Button onClick={() => setTaskToEdit(task.id)}>
                 {task.edit ? 'No_Edit' : 'Edit'}
               </Button>
             </div>
