@@ -1,77 +1,63 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useStateActions, useStateSelector } from '../state/StateProvider';
 
-function Todo() {
-  const [tasks, setTasks] = useState([]);
+const Todo = () => {
+  const tasks = useStateSelector((state) => state.tasks);
+  const { addTask, removeTask, changeTask } = useStateActions();
 
-  const addTask = (e) => {
+  const addTodo = (e) => {
     e.preventDefault();
     const input = e.target.elements['task-name'];
     const value = input.value.trim();
     value &&
-      setTasks([
-        ...tasks,
-        {
-          id: generateId(tasks),
-          completed: false,
-          edit: false,
-          value,
-        },
-      ]);
+      addTask({
+        id: generateId(tasks),
+        completed: false,
+        edit: false,
+        value,
+      });
     input.value = '';
     input.focus();
   };
 
-  const removeTask = (id) => setTasks(tasks.filter((task) => task.id !== id));
-
   const toggleCompleted = (e, id) => {
     e.target === e.currentTarget &&
-      setTasks(
-        tasks.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                completed: !task.completed,
-              }
-            : task,
-        ),
-      );
+      changeTask({
+        id,
+        key: 'completed',
+        value: !tasks.find((task) => task.id === id).completed,
+      });
   };
 
   const setTaskToEdit = (id) =>
-    setTasks(
-      tasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              edit: !task.edit,
-            }
-          : task,
-      ),
-    );
+    changeTask({
+      id,
+      key: 'edit',
+      value: !tasks.find((task) => task.id === id).edit,
+    });
 
-  const editTask = (e, id) => {
-    e.preventDefault();
-    const input = e.target.elements['task-name'];
-    const value = input.value.trim();
-    setTasks(
-      tasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              edit: !task.edit,
-              value,
-            }
-          : task,
-      ),
-    );
-  };
+  // const editTask = (e, id) => {
+  //   e.preventDefault();
+  //   const input = e.target.elements['task-name'];
+  //   const value = input.value.trim();
+  //   setTasks(
+  //     tasks.map((task) =>
+  //       task.id === id
+  //         ? {
+  //             ...task,
+  //             edit: !task.edit,
+  //             value,
+  //           }
+  //         : task,
+  //     ),
+  //   );
+  // };
   const generateId = (tasks) =>
     tasks.reduce((max, curr) => Math.max(max, curr.id), -1) + 1;
 
   return (
     <Wrapper>
-      <Form onSubmit={addTask}>
+      <Form onSubmit={addTodo}>
         <input type='text' name='task-name' autoComplete='off'></input>
         <Button>Add</Button>
       </Form>
@@ -83,7 +69,12 @@ function Todo() {
             onClick={(e) => toggleCompleted(e, task.id)}
           >
             {task.edit ? (
-              <Form onSubmit={(e) => editTask(e, task.id)}>
+              <Form
+                onSubmit={
+                  undefined
+                  // (e) => editTask(e, task.id)
+                }
+              >
                 <input type='text' name='task-name' autoComplete='off'></input>
                 <Button>Save</Button>
               </Form>
@@ -101,7 +92,7 @@ function Todo() {
       </List>
     </Wrapper>
   );
-}
+};
 
 const Wrapper = styled.div`
   max-width: 400px;
@@ -144,7 +135,7 @@ const Task = styled.li`
   margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => (props.completed ? 'lime' : 'tomato')};
+  background-color: ${({ completed }) => (completed ? 'lime' : 'tomato')};
 
   div {
     display: flex;

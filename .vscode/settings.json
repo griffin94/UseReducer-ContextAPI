@@ -12,9 +12,12 @@
   "prettier.bracketSpacing": true,
   "prettier.jsxSingleQuote": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "window.zoomLevel": 3,
+  "window.zoomLevel": 2,
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "eslint.alwaysShowStatus": true,
   "editor.linkedEditing": true,
-  "editor.cursorBlinking": "expand"
+  "editor.cursorBlinking": "expand",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
 }

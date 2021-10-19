@@ -1,5 +1,6 @@
 import Todo from './components/Todo';
 import { createGlobalStyle } from 'styled-components';
+import { StateProvider } from './state/StateProvider';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -12,10 +13,10 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <div className='App'>
+    <StateProvider>
       <GlobalStyle />
       <Todo />
-    </div>
+    </StateProvider>
   );
 }
 
