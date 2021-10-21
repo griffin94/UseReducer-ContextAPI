@@ -20,38 +20,32 @@ const Todo = () => {
     input.focus();
   };
 
-  const toggleCompleted = (e, id) => {
+  const toggleCompleted = (e, task) => {
     e.target === e.currentTarget &&
       changeTask({
-        id,
-        key: 'completed',
-        value: !tasks.find((task) => task.id === id).completed,
+        ...task,
+        completed: !task.completed,
       });
   };
 
-  const setTaskToEdit = (id) =>
+  const setTaskToEdit = (task) =>
     changeTask({
-      id,
-      key: 'edit',
-      value: !tasks.find((task) => task.id === id).edit,
+      ...task,
+      edit: !task.edit,
     });
 
-  // const editTask = (e, id) => {
-  //   e.preventDefault();
-  //   const input = e.target.elements['task-name'];
-  //   const value = input.value.trim();
-  //   setTasks(
-  //     tasks.map((task) =>
-  //       task.id === id
-  //         ? {
-  //             ...task,
-  //             edit: !task.edit,
-  //             value,
-  //           }
-  //         : task,
-  //     ),
-  //   );
-  // };
+  const editTask = (e, task) => {
+    e.preventDefault();
+    const input = e.target.elements['task-name'];
+    const value = input.value.trim();
+    value &&
+      changeTask({
+        ...task,
+        value,
+        edit: !task.edit,
+      });
+  };
+
   const generateId = (tasks) =>
     tasks.reduce((max, curr) => Math.max(max, curr.id), -1) + 1;
 
@@ -66,15 +60,10 @@ const Todo = () => {
           <Task
             key={task.id}
             completed={task.completed}
-            onClick={(e) => toggleCompleted(e, task.id)}
+            onClick={(e) => toggleCompleted(e, task)}
           >
             {task.edit ? (
-              <Form
-                onSubmit={
-                  undefined
-                  // (e) => editTask(e, task.id)
-                }
-              >
+              <Form onSubmit={(e) => editTask(e, task)}>
                 <input type='text' name='task-name' autoComplete='off'></input>
                 <Button>Save</Button>
               </Form>
@@ -83,7 +72,7 @@ const Todo = () => {
             )}
             <div>
               <Button onClick={() => removeTask(task.id)}>Remove</Button>
-              <Button onClick={() => setTaskToEdit(task.id)}>
+              <Button onClick={() => setTaskToEdit(task)}>
                 {task.edit ? 'No_Edit' : 'Edit'}
               </Button>
             </div>

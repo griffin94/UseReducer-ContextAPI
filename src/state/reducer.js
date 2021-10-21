@@ -12,25 +12,14 @@ const reducer = (state, { type, payload }) => {
       };
 
     case CHANGE_TASK: {
-      const key = payload?.key,
-        value = payload?.value;
-      if (key !== undefined && value !== undefined) {
-        return {
-          ...state,
-          tasks: [
-            ...state.tasks.map((task) =>
-              task.id === payload.id
-                ? {
-                    ...task,
-                    [payload.key]: payload.value,
-                  }
-                : task,
-            ),
-          ],
-        };
-      } else {
-        return state;
-      }
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks.map((task) =>
+            task.id === payload.id ? payload : task,
+          ),
+        ],
+      };
     }
 
     default:
